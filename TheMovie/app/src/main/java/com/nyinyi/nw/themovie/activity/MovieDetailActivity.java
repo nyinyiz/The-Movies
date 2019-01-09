@@ -1,5 +1,6 @@
 package com.nyinyi.nw.themovie.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.event.DataEvent;
@@ -84,12 +86,14 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         actionBar.setTitle(title);
         collapsingToolbarLayout.setTitleEnabled(false);
-        collapsingToolbarLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                collapsingToolbarLayout.setTitleEnabled(true);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            collapsingToolbarLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    collapsingToolbarLayout.setTitleEnabled(true);
+                }
+            });
+        }
 
         ButterKnife.bind(this, this);
 
@@ -102,13 +106,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(MovieConstants.IMAGE_URL + backdrop_path)
-                .placeholder(R.drawable.images)
+                .apply(new RequestOptions().placeholder(R.drawable.images).error(R.drawable.images))
                 .into(cover)
         ;
 
         Glide.with(getApplicationContext())
                 .load(MovieConstants.IMAGE_URL + poster_path)
-                .placeholder(R.drawable.images)
+                .apply(new RequestOptions().placeholder(R.drawable.images).error(R.drawable.images))
                 .into(poster)
         ;
 
@@ -135,7 +139,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(MovieConstants.IMAGE_URL + backdrop_path)
-                .placeholder(R.drawable.images)
+                .apply(new RequestOptions().placeholder(R.drawable.images).error(R.drawable.images))
                 .into(cover_picture)
         ;
     }
@@ -158,7 +162,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void movieDetailLoadedEvent(DataEvent.MovieDetail event) {
-//        radapter.setsearchdatalist(event.getMoviedetailList());
         movieVO = event.getMoviedetailList();
     }
 

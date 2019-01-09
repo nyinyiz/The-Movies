@@ -16,7 +16,6 @@ import org.greenrobot.eventbus.ThreadMode;
 public class SearchPresenter extends BasePresenter {
     private Context mContext;
     private SearchView mSearchView;
-    private String query;
 
     public SearchPresenter(Context mContext, SearchView mSearchView) {
         this.mContext = mContext;
@@ -25,7 +24,6 @@ public class SearchPresenter extends BasePresenter {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void searchMovieLoadedEvent(DataEvent.SearchMovieLoadEvent event) {
-//        radapter.setsearchdatalist(event.getSearchVOList());
         mSearchView.onSearchSuccess(event.getSearchVOList());
     }
 

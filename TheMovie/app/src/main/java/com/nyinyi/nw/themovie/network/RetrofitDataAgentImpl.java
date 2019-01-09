@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +33,6 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
 
     private ApiService apiService;
     private ApiService searchapiService;
-
-    //static final String BASE_URL="http://student.newwestgroup.org/nyinyizaw/ci_bookhouse/api/";
-    //static final String IMAGE_URL="http://student.newwestgroup.org/nyinyizaw/ci_bookhouse/uploads/";
 
     private RetrofitDataAgentImpl() {
 
@@ -75,7 +73,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         Call<MovieResponse<NowplayingVO>> call = apiService.loadNowPlayingMovies(MovieConstants.API_KEY);
         call.enqueue(new Callback<MovieResponse<NowplayingVO>>() {
             @Override
-            public void onResponse(Call<MovieResponse<NowplayingVO>> call, Response<MovieResponse<NowplayingVO>> response) {
+            public void onResponse(@NonNull Call<MovieResponse<NowplayingVO>> call, @NonNull Response<MovieResponse<NowplayingVO>> response) {
                 MovieResponse<NowplayingVO> movieResponse = response.body();
 
                 if (movieResponse != null) {
@@ -86,7 +84,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             }
 
             @Override
-            public void onFailure(Call<MovieResponse<NowplayingVO>> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse<NowplayingVO>> call, @NonNull Throwable t) {
                 EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent(t.getMessage()));
             }
         });
@@ -100,7 +98,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         Call<MovieResponse<UpcomingVO>> call = apiService.loadUpcomingMovies(MovieConstants.API_KEY);
         call.enqueue(new Callback<MovieResponse<UpcomingVO>>() {
             @Override
-            public void onResponse(Call<MovieResponse<UpcomingVO>> call, Response<MovieResponse<UpcomingVO>> response) {
+            public void onResponse(@NonNull Call<MovieResponse<UpcomingVO>> call, @NonNull Response<MovieResponse<UpcomingVO>> response) {
 
                 MovieResponse<UpcomingVO> movieResponse = response.body();
 
@@ -117,15 +115,10 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             }
 
             @Override
-            public void onFailure(Call<MovieResponse<UpcomingVO>> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse<UpcomingVO>> call, @NonNull Throwable t) {
                 EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent(t.getMessage()));
             }
         });
-
-    }
-
-    @Override
-    public void loadTopRatedMovies() {
 
     }
 
@@ -135,7 +128,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         Call<MovieResponse<PopularVO>> call = apiService.loadPopularMovies(MovieConstants.API_KEY);
         call.enqueue(new Callback<MovieResponse<PopularVO>>() {
             @Override
-            public void onResponse(Call<MovieResponse<PopularVO>> call, Response<MovieResponse<PopularVO>> response) {
+            public void onResponse(@NonNull Call<MovieResponse<PopularVO>> call, @NonNull Response<MovieResponse<PopularVO>> response) {
 
                 MovieResponse<PopularVO> movieResponse = response.body();
 
@@ -152,7 +145,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             }
 
             @Override
-            public void onFailure(Call<MovieResponse<PopularVO>> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse<PopularVO>> call, @NonNull Throwable t) {
                 EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent(t.getMessage()));
             }
         });
@@ -163,7 +156,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         Call<MovieVO> call = apiService.loadMovieDetails(movie_id, MovieConstants.API_KEY);
         call.enqueue(new Callback<MovieVO>() {
             @Override
-            public void onResponse(Call<MovieVO> call, Response<MovieVO> response) {
+            public void onResponse(@NonNull Call<MovieVO> call, @NonNull Response<MovieVO> response) {
 
                 MovieVO movielist = response.body();
                 if (movielist != null) {
@@ -175,7 +168,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             }
 
             @Override
-            public void onFailure(Call<MovieVO> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieVO> call, @NonNull Throwable t) {
                 EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent(t.getMessage()));
             }
         });
@@ -185,13 +178,15 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         Call<MovieResponse<UpcomingVO>> call = searchapiService.loadsearchMovies(MovieConstants.API_KEY, query);
         call.enqueue(new Callback<MovieResponse<UpcomingVO>>() {
             @Override
-            public void onResponse(Call<MovieResponse<UpcomingVO>> call, Response<MovieResponse<UpcomingVO>> response) {
+            public void onResponse(@NonNull Call<MovieResponse<UpcomingVO>> call, @NonNull Response<MovieResponse<UpcomingVO>> response) {
                 MovieResponse<UpcomingVO> movieResponse = response.body();
 
                 Log.d("Response1", query);
                 Log.d("Response", response.body() + "");
                 if (response.body() != null) {
-                    EventBus.getDefault().post(new DataEvent.SearchMovieLoadEvent(movieResponse.getMovieList()));
+                    if (movieResponse != null) {
+                        EventBus.getDefault().post(new DataEvent.SearchMovieLoadEvent(movieResponse.getMovieList()));
+                    }
 
                 } else {
 
@@ -200,7 +195,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             }
 
             @Override
-            public void onFailure(Call<MovieResponse<UpcomingVO>> call, Throwable t) {
+            public void onFailure(@NonNull Call<MovieResponse<UpcomingVO>> call, @NonNull Throwable t) {
 
                 EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent(t.getMessage()));
             }

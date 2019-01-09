@@ -1,20 +1,16 @@
 package com.nyinyi.nw.themovie.activity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.adapter.RecyclerAdapter;
 import com.nyinyi.nw.themovie.event.DataEvent;
 import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
-import com.nyinyi.nw.themovie.vos.UpcomingVO;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,15 +20,11 @@ import butterknife.ButterKnife;
 
 public class SearchresultActivity extends AppCompatActivity {
 
-
-    String search_name;
-    List<UpcomingVO> searchdata;
-    RecyclerAdapter radapter;
-
     @BindView(R.id.rv_movie)
     RecyclerView recycler;
-    @BindView(R.id.ig_visible)
-    ImageView ig_visible;
+
+    private String search_name;
+    private RecyclerAdapter radapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +33,8 @@ public class SearchresultActivity extends AppCompatActivity {
 
         ButterKnife.bind(this, this);
         search_name = getIntent().getStringExtra("search_name");
-        getSupportActionBar().setTitle(search_name);
+
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(search_name);
 
 
         radapter = new RecyclerAdapter(getApplicationContext());

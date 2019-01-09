@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.activity.MovieDetailActivity;
 import com.nyinyi.nw.themovie.util.MovieConstants;
@@ -17,6 +18,7 @@ import com.nyinyi.nw.themovie.vos.UpcomingVO;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,16 +29,17 @@ import butterknife.ButterKnife;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MovieViewHolder> {
 
-    Context context;
     private List<UpcomingVO> upcomingVOList;
+    private Context context;
 
     public RecyclerAdapter(Context context) {
         this.context = context;
         upcomingVOList = new ArrayList<>();
     }
 
+    @NonNull
     @Override
-    public RecyclerAdapter.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.search_movie, parent, false);
@@ -44,28 +47,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MovieV
     }
 
     @Override
-    public void onBindViewHolder(RecyclerAdapter.MovieViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerAdapter.MovieViewHolder holder, final int position) {
 
         if (upcomingVOList.size() != 0) {
             holder.bind(upcomingVOList.get(position));
-            holder.ivMovie.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MovieDetailActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("id", upcomingVOList.get(position).getId().toString());
-                    intent.putExtra("title", upcomingVOList.get(position).getTitle());
-                    intent.putExtra("vote_average", upcomingVOList.get(position).getVoteAverage().toString());
-                    intent.putExtra("poster_path", upcomingVOList.get(position).getPosterPath());
-                    intent.putExtra("original_language", upcomingVOList.get(position).getOriginalLanguage());
-                    intent.putExtra("original_title", upcomingVOList.get(position).getOriginalTitle());
-                    intent.putExtra("backdrop_path", upcomingVOList.get(position).getBackdropPath());
-                    intent.putExtra("adult", upcomingVOList.get(position).getAdult());
-                    intent.putExtra("overview", upcomingVOList.get(position).getOverview());
-                    intent.putExtra("release_date", upcomingVOList.get(position).getReleaseDate());
-                    context.startActivity(intent);
+            holder.ivMovie.setOnClickListener(v -> {
+                Intent intent = new Intent(context, MovieDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id", upcomingVOList.get(position).getId().toString());
+                intent.putExtra("title", upcomingVOList.get(position).getTitle());
+                intent.putExtra("vote_average", upcomingVOList.get(position).getVoteAverage().toString());
+                intent.putExtra("poster_path", upcomingVOList.get(position).getPosterPath());
+                intent.putExtra("original_language", upcomingVOList.get(position).getOriginalLanguage());
+                intent.putExtra("original_title", upcomingVOList.get(position).getOriginalTitle());
+                intent.putExtra("backdrop_path", upcomingVOList.get(position).getBackdropPath());
+                intent.putExtra("adult", upcomingVOList.get(position).getAdult());
+                intent.putExtra("overview", upcomingVOList.get(position).getOverview());
+                intent.putExtra("release_date", upcomingVOList.get(position).getReleaseDate());
+                context.startActivity(intent);
 
-                }
             });
 
         } else {
@@ -88,9 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MovieV
         @BindView(R.id.iv_movie)
         ImageView ivMovie;
 
-        private UpcomingVO mData;
-
-        public MovieViewHolder(View itemView) {
+        MovieViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -98,11 +96,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MovieV
 
         public void bind(UpcomingVO data) {
 
-            mData = data;
             Glide.with(context)
                     .load(MovieConstants.IMAGE_URL + data.getPosterPath())
-                    .placeholder(R.drawable.images)
-                    .error(R.drawable.images)
+                    .apply(new RequestOptions().placeholder(R.drawable.images).error(R.drawable.images))
                     .into(ivMovie);
 
 

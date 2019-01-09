@@ -16,6 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -49,7 +50,7 @@ public class NowplayingFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nowplaying, container, false);
@@ -65,14 +66,10 @@ public class NowplayingFragment extends Fragment implements SwipeRefreshLayout.O
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
 
-        refresh.post(new Runnable() {
-
-            @Override
-            public void run() {
-                refresh.setRefreshing(true);
-                // Fetching data from server
-                RetrofitDataAgentImpl.getInstance().loadNowPlayingMovies();
-            }
+        refresh.post(() -> {
+            refresh.setRefreshing(true);
+            // Fetching data from server
+            RetrofitDataAgentImpl.getInstance().loadNowPlayingMovies();
         });
         return recyclerView;
 

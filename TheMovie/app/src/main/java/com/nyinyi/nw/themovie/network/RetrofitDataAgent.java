@@ -10,8 +10,6 @@ public interface RetrofitDataAgent {
 
     void loadUpcomingMovies();
 
-    void loadTopRatedMovies();
-
     void loadPopularMovies();
 
     void loadMovieDetail(String movie_id);

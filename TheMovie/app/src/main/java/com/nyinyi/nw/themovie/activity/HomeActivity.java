@@ -34,8 +34,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupApplication() {
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        TabLayout tabs = findViewById(R.id.tabs);
+        ViewPager viewPager = findViewById(R.id.viewpager);
 
         if (NetworkUtils.isOnline(getApplicationContext())) {
             setupViewPager(viewPager);
@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity {
         adapter.addFragment(new UpcomingFragment(), "Upcoming");
         adapter.addFragment(new NowplayingFragment(), "Now Playing");
         adapter.addFragment(new PopularFragment(), "Popular");
-//        adapter.addFragment(new );
         viewPager.setAdapter(adapter);
     }
 
@@ -77,12 +76,8 @@ public class HomeActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String search_str = query;
-                //doFilterAsync(mSearchString);
-//                Toast.makeText(getApplicationContext(),search_str, Toast.LENGTH_LONG).show();
-
                 Intent intent = new Intent(getApplicationContext(), SearchresultActivity.class);
-                intent.putExtra("search_name", search_str);
+                intent.putExtra("search_name", query);
                 startActivity(intent);
                 return true;
             }
