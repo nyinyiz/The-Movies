@@ -1,6 +1,5 @@
 package com.nyinyi.nw.themovie.network;
 
-import com.nyinyi.nw.themovie.model.upcoming.Upcoming;
 import com.nyinyi.nw.themovie.network.responses.MovieResponse;
 import com.nyinyi.nw.themovie.util.MovieConstants;
 import com.nyinyi.nw.themovie.vos.MovieVO;
@@ -20,7 +19,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     @GET("upcoming")
-    Call<MovieResponse<UpcomingVO>> loadUpcomingMovies (
+    Call<MovieResponse<UpcomingVO>> loadUpcomingMovies(
             @Query(MovieConstants.PARAM_API_KEY) String apiKey
     );
 
@@ -31,7 +30,7 @@ public interface ApiService {
 
     @GET("popular")
     Call<MovieResponse<PopularVO>> loadPopularMovies(
-      @Query(MovieConstants.PARAM_API_KEY) String apiKey
+            @Query(MovieConstants.PARAM_API_KEY) String apiKey
     );
 
     @GET("search/movie")

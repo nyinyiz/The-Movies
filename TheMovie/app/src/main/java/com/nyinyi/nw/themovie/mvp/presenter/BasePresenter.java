@@ -9,9 +9,8 @@ import org.greenrobot.eventbus.EventBus;
 public abstract class BasePresenter {
 
     public void onCreate() {
-       EventBus eventBus = EventBus.getDefault();
-        if (!eventBus.isRegistered(this))
-        {
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 

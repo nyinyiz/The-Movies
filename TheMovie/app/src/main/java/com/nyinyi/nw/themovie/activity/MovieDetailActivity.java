@@ -1,12 +1,6 @@
 package com.nyinyi.nw.themovie.activity;
 
 import android.os.Bundle;
-import android.support.annotation.BoolRes;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -14,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.event.DataEvent;
 import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
@@ -24,8 +19,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -79,11 +76,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         String original_language = getIntent().getStringExtra("original_language");
         String original_title = getIntent().getStringExtra("original_title");
         String backdrop_path = getIntent().getStringExtra("backdrop_path");
-        Boolean adult = getIntent().getBooleanExtra("adult",false);
+        Boolean adult = getIntent().getBooleanExtra("adult", false);
         String overview = getIntent().getStringExtra("overview");
         String release_date = getIntent().getStringExtra("release_date");
 
-        Toast.makeText(getApplicationContext(),"ID "+id,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "ID " + id, Toast.LENGTH_LONG).show();
 
         actionBar.setTitle(title);
         collapsingToolbarLayout.setTitleEnabled(false);
@@ -94,34 +91,32 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
         });
 
-        ButterKnife.bind(this,this);
+        ButterKnife.bind(this, this);
 
 
 //        Toast.makeText(getApplicationContext(),movieVO.getTitle(),Toast.LENGTH_LONG).show();
 
         rate.setEnabled(false);
 
-        float rating = Float.parseFloat(vote_average)/2;
+        float rating = Float.parseFloat(vote_average) / 2;
 
         Glide.with(getApplicationContext())
-                .load(MovieConstants.IMAGE_URL+backdrop_path)
+                .load(MovieConstants.IMAGE_URL + backdrop_path)
                 .placeholder(R.drawable.images)
                 .into(cover)
-                ;
+        ;
 
         Glide.with(getApplicationContext())
-                .load(MovieConstants.IMAGE_URL+poster_path)
+                .load(MovieConstants.IMAGE_URL + poster_path)
                 .placeholder(R.drawable.images)
                 .into(poster)
         ;
 
         movie_title.setText(title);
 
-        if (adult)
-        {
+        if (adult) {
             c_adult.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             c_adult.setVisibility(View.GONE);
         }
 
@@ -131,16 +126,15 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         ori_title.setText(original_title);
-        if (original_language.equals("en"))
-        {
+        if (original_language.equals("en")) {
             ori_lan.setText("English");
-        }else {
+        } else {
             ori_lan.setText(original_language);
         }
         tx_release.setText(release_date);
 
         Glide.with(getApplicationContext())
-                .load(MovieConstants.IMAGE_URL+backdrop_path)
+                .load(MovieConstants.IMAGE_URL + backdrop_path)
                 .placeholder(R.drawable.images)
                 .into(cover_picture)
         ;
@@ -170,6 +164,6 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void errorEvent(DataEvent.ErrorLoadedEvent event) {
-        Toast.makeText(getApplicationContext() , event.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), event.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -2,28 +2,25 @@ package com.nyinyi.nw.themovie.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nyinyi.nw.themovie.R;
-import com.nyinyi.nw.themovie.adapter.MovieListAdapter;
 import com.nyinyi.nw.themovie.adapter.NowplayingAdapter;
 import com.nyinyi.nw.themovie.event.DataEvent;
-import com.nyinyi.nw.themovie.network.RetrofitDataAgent;
 import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -55,8 +52,8 @@ public class NowplayingFragment extends Fragment implements SwipeRefreshLayout.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_nowplaying, container, false);
-        ButterKnife.bind(this , view);
+        View view = inflater.inflate(R.layout.fragment_nowplaying, container, false);
+        ButterKnife.bind(this, view);
         refresh.setVisibility(View.VISIBLE);
 
         setupRecycler();
@@ -105,6 +102,7 @@ public class NowplayingFragment extends Fragment implements SwipeRefreshLayout.O
         EventBus.getDefault().unregister(this);
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void nowplayingMovieLoadedEvent(DataEvent.NowplayingMovieDataLoadedEvent event) {
 
@@ -114,7 +112,7 @@ public class NowplayingFragment extends Fragment implements SwipeRefreshLayout.O
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void errorEvent(DataEvent.ErrorLoadedEvent event) {
 
-        Toast.makeText(getContext() , event.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), event.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

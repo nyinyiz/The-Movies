@@ -1,6 +1,5 @@
 package com.nyinyi.nw.themovie.mvp.view;
 
-import com.nyinyi.nw.themovie.vos.MovieVO;
 import com.nyinyi.nw.themovie.vos.UpcomingVO;
 
 import java.util.List;

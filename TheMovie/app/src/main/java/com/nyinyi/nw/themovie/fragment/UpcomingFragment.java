@@ -1,35 +1,25 @@
 package com.nyinyi.nw.themovie.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.nyinyi.nw.themovie.R;
-import com.nyinyi.nw.themovie.activity.MovieDetailActivity;
 import com.nyinyi.nw.themovie.adapter.MovieListAdapter;
 import com.nyinyi.nw.themovie.event.DataEvent;
-import com.nyinyi.nw.themovie.model.upcoming.Result;
 import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
-import com.nyinyi.nw.themovie.util.MovieConstants;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -104,7 +94,7 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void errorEvent(DataEvent.ErrorLoadedEvent event) {
         swipeRefreshLayout.setVisibility(View.GONE);
-        Toast.makeText(getContext() , event.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), event.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
 }

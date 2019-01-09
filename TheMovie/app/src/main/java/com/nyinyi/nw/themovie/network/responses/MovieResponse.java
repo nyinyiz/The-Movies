@@ -1,7 +1,6 @@
 package com.nyinyi.nw.themovie.network.responses;
 
 import com.google.gson.annotations.SerializedName;
-import com.nyinyi.nw.themovie.vos.UpcomingVO;
 
 import java.util.List;
 

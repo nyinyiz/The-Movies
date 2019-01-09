@@ -2,7 +2,6 @@ package com.nyinyi.nw.themovie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,11 @@ import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.activity.MovieDetailActivity;
 import com.nyinyi.nw.themovie.util.MovieConstants;
 import com.nyinyi.nw.themovie.vos.NowplayingVO;
-import com.nyinyi.nw.themovie.vos.UpcomingVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,7 +38,7 @@ public class NowplayingAdapter extends RecyclerView.Adapter<NowplayingAdapter.Mo
     @Override
     public NowplayingAdapter.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.upcomingmovie,parent,false);
+        View view = inflater.inflate(R.layout.upcomingmovie, parent, false);
         return new MovieViewHolder(view);
     }
 
@@ -51,16 +50,16 @@ public class NowplayingAdapter extends RecyclerView.Adapter<NowplayingAdapter.Mo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra("id",nowplayingVOList.get(position).getId().toString());
-                intent.putExtra("title",nowplayingVOList.get(position).getTitle());
-                intent.putExtra("vote_average",nowplayingVOList.get(position).getVoteAverage().toString());
-                intent.putExtra("poster_path",nowplayingVOList.get(position).getPosterPath());
-                intent.putExtra("original_language",nowplayingVOList.get(position).getOriginalLanguage());
-                intent.putExtra("original_title",nowplayingVOList.get(position).getOriginalTitle());
-                intent.putExtra("backdrop_path",nowplayingVOList.get(position).getBackdropPath());
-                intent.putExtra("adult",nowplayingVOList.get(position).getAdult());
-                intent.putExtra("overview",nowplayingVOList.get(position).getOverview());
-                intent.putExtra("release_date",nowplayingVOList.get(position).getReleaseDate());
+                intent.putExtra("id", nowplayingVOList.get(position).getId().toString());
+                intent.putExtra("title", nowplayingVOList.get(position).getTitle());
+                intent.putExtra("vote_average", nowplayingVOList.get(position).getVoteAverage().toString());
+                intent.putExtra("poster_path", nowplayingVOList.get(position).getPosterPath());
+                intent.putExtra("original_language", nowplayingVOList.get(position).getOriginalLanguage());
+                intent.putExtra("original_title", nowplayingVOList.get(position).getOriginalTitle());
+                intent.putExtra("backdrop_path", nowplayingVOList.get(position).getBackdropPath());
+                intent.putExtra("adult", nowplayingVOList.get(position).getAdult());
+                intent.putExtra("overview", nowplayingVOList.get(position).getOverview());
+                intent.putExtra("release_date", nowplayingVOList.get(position).getReleaseDate());
                 context.startActivity(intent);
 
             }
@@ -72,8 +71,7 @@ public class NowplayingAdapter extends RecyclerView.Adapter<NowplayingAdapter.Mo
         return nowplayingVOList.size();
     }
 
-    public void setNowplayingVOList(List<NowplayingVO> nowplayingVOList)
-    {
+    public void setNowplayingVOList(List<NowplayingVO> nowplayingVOList) {
         this.nowplayingVOList = nowplayingVOList;
         notifyDataSetChanged();
     }

@@ -1,4 +1,3 @@
-
 package com.nyinyi.nw.themovie.vos;
 
 import com.google.gson.annotations.SerializedName;

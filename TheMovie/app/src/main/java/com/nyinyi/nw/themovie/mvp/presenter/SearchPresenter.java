@@ -5,7 +5,6 @@ import android.content.Context;
 import com.nyinyi.nw.themovie.event.DataEvent;
 import com.nyinyi.nw.themovie.mvp.view.SearchView;
 import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
-import com.nyinyi.nw.themovie.vos.MovieVO;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,11 +26,10 @@ public class SearchPresenter extends BasePresenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void searchMovieLoadedEvent(DataEvent.SearchMovieLoadEvent event) {
 //        radapter.setsearchdatalist(event.getSearchVOList());
-    mSearchView.onSearchSuccess( event.getSearchVOList());
+        mSearchView.onSearchSuccess(event.getSearchVOList());
     }
 
-    public void searchMovie(String query)
-    {
+    public void searchMovie(String query) {
         RetrofitDataAgentImpl.getInstance().loadsearchMovie(query);
     }
 }

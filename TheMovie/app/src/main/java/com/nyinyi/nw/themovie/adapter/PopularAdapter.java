@@ -2,7 +2,6 @@ package com.nyinyi.nw.themovie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import com.nyinyi.nw.themovie.vos.PopularVO;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,7 +37,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieVie
     @Override
     public PopularAdapter.MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.upcomingmovie,parent,false);
+        View view = inflater.inflate(R.layout.upcomingmovie, parent, false);
         return new MovieViewHolder(view);
 
     }
@@ -50,16 +50,16 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra("id",popularVOList.get(position).getId().toString());
-                intent.putExtra("title",popularVOList.get(position).getTitle());
-                intent.putExtra("vote_average",popularVOList.get(position).getVoteAverage().toString());
-                intent.putExtra("poster_path",popularVOList.get(position).getPosterPath());
-                intent.putExtra("original_language",popularVOList.get(position).getOriginalLanguage());
-                intent.putExtra("original_title",popularVOList.get(position).getOriginalTitle());
-                intent.putExtra("backdrop_path",popularVOList.get(position).getBackdropPath());
-                intent.putExtra("adult",popularVOList.get(position).getAdult());
-                intent.putExtra("overview",popularVOList.get(position).getOverview());
-                intent.putExtra("release_date",popularVOList.get(position).getReleaseDate());
+                intent.putExtra("id", popularVOList.get(position).getId().toString());
+                intent.putExtra("title", popularVOList.get(position).getTitle());
+                intent.putExtra("vote_average", popularVOList.get(position).getVoteAverage().toString());
+                intent.putExtra("poster_path", popularVOList.get(position).getPosterPath());
+                intent.putExtra("original_language", popularVOList.get(position).getOriginalLanguage());
+                intent.putExtra("original_title", popularVOList.get(position).getOriginalTitle());
+                intent.putExtra("backdrop_path", popularVOList.get(position).getBackdropPath());
+                intent.putExtra("adult", popularVOList.get(position).getAdult());
+                intent.putExtra("overview", popularVOList.get(position).getOverview());
+                intent.putExtra("release_date", popularVOList.get(position).getReleaseDate());
                 context.startActivity(intent);
             }
         });
@@ -75,15 +75,17 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MovieVie
         notifyDataSetChanged();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_movie)
         ImageView imageView;
 
         private PopularVO popularVO;
+
         public MovieViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
+
         public void bind(PopularVO data) {
             popularVO = data;
             Glide.with(context)

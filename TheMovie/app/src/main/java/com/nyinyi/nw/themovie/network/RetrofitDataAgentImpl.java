@@ -1,10 +1,8 @@
 package com.nyinyi.nw.themovie.network;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.nyinyi.nw.themovie.event.DataEvent;
-import com.nyinyi.nw.themovie.model.upcoming.Upcoming;
 import com.nyinyi.nw.themovie.network.responses.MovieResponse;
 import com.nyinyi.nw.themovie.util.MovieConstants;
 import com.nyinyi.nw.themovie.vos.MovieVO;
@@ -15,6 +13,7 @@ import com.nyinyi.nw.themovie.vos.UpcomingVO;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,22 +36,21 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
     //static final String BASE_URL="http://student.newwestgroup.org/nyinyizaw/ci_bookhouse/api/";
     //static final String IMAGE_URL="http://student.newwestgroup.org/nyinyizaw/ci_bookhouse/uploads/";
 
-    private RetrofitDataAgentImpl()
-    {
+    private RetrofitDataAgentImpl() {
 
-        OkHttpClient okHttpClient= new OkHttpClient.Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
 
-        Retrofit retrofit=new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MovieConstants.BASE_URL)
                 .callFactory(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Retrofit searchretrofit=new Retrofit.Builder()
+        Retrofit searchretrofit = new Retrofit.Builder()
                 .baseUrl(MovieConstants.SEARCH_BASE_URL)
                 .callFactory(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -64,7 +62,7 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
     }
 
     public static RetrofitDataAgentImpl getInstance() {
-        if (objInstance == null){
+        if (objInstance == null) {
             objInstance = new RetrofitDataAgentImpl();
         }
         return objInstance;
@@ -80,11 +78,9 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
             public void onResponse(Call<MovieResponse<NowplayingVO>> call, Response<MovieResponse<NowplayingVO>> response) {
                 MovieResponse<NowplayingVO> movieResponse = response.body();
 
-                if (movieResponse != null)
-                {
+                if (movieResponse != null) {
                     EventBus.getDefault().post(new DataEvent.NowplayingMovieDataLoadedEvent(movieResponse.getMovieList()));
-                }
-                else {
+                } else {
                     EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent("Response is null"));
                 }
             }
@@ -164,17 +160,16 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
 
     @Override
     public void loadMovieDetail(final String movie_id) {
-        Call<MovieVO> call = apiService.loadMovieDetails(movie_id,MovieConstants.API_KEY);
+        Call<MovieVO> call = apiService.loadMovieDetails(movie_id, MovieConstants.API_KEY);
         call.enqueue(new Callback<MovieVO>() {
             @Override
             public void onResponse(Call<MovieVO> call, Response<MovieVO> response) {
 
                 MovieVO movielist = response.body();
-                if (movielist != null)
-                {
+                if (movielist != null) {
                     EventBus.getDefault().post(new DataEvent.MovieDetail(movielist));
 
-                }else {
+                } else {
                     EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent("Response is null"));
                 }
             }
@@ -186,22 +181,19 @@ public class RetrofitDataAgentImpl implements RetrofitDataAgent {
         });
     }
 
-    public void loadsearchMovie(final String query)
-    {
-        Call<MovieResponse<UpcomingVO>> call = searchapiService.loadsearchMovies(MovieConstants.API_KEY,query);
+    public void loadsearchMovie(final String query) {
+        Call<MovieResponse<UpcomingVO>> call = searchapiService.loadsearchMovies(MovieConstants.API_KEY, query);
         call.enqueue(new Callback<MovieResponse<UpcomingVO>>() {
             @Override
             public void onResponse(Call<MovieResponse<UpcomingVO>> call, Response<MovieResponse<UpcomingVO>> response) {
                 MovieResponse<UpcomingVO> movieResponse = response.body();
 
-                Log.d("Response1",query);
-                Log.d("Response",response.body()+"");
-                if (response.body() != null)
-                {
+                Log.d("Response1", query);
+                Log.d("Response", response.body() + "");
+                if (response.body() != null) {
                     EventBus.getDefault().post(new DataEvent.SearchMovieLoadEvent(movieResponse.getMovieList()));
 
-                }
-                else {
+                } else {
 
                     EventBus.getDefault().post(new DataEvent.ErrorLoadedEvent("Response is null"));
                 }

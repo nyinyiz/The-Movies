@@ -1,4 +1,3 @@
-
 package com.nyinyi.nw.themovie.model.upcoming;
 
 import com.google.gson.annotations.SerializedName;

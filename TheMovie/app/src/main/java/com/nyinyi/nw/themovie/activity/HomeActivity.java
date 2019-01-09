@@ -1,30 +1,28 @@
 package com.nyinyi.nw.themovie.activity;
 
 import android.app.SearchManager;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.nyinyi.nw.themovie.R;
 import com.nyinyi.nw.themovie.adapter.ViewPagerAdapter;
 import com.nyinyi.nw.themovie.fragment.NowplayingFragment;
 import com.nyinyi.nw.themovie.fragment.PopularFragment;
 import com.nyinyi.nw.themovie.fragment.UpcomingFragment;
-import com.nyinyi.nw.themovie.network.RetrofitDataAgentImpl;
 import com.nyinyi.nw.themovie.util.NetworkUtils;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
+import androidx.viewpager.widget.ViewPager;
+
 public class HomeActivity extends AppCompatActivity {
+
+    public SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +37,28 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        if (NetworkUtils.isOnline(getApplicationContext()))
-        {
+        if (NetworkUtils.isOnline(getApplicationContext())) {
             setupViewPager(viewPager);
             tabs.setupWithViewPager(viewPager);
             viewPager.setOffscreenPageLimit(4);
 
-        }else {
+        } else {
 
-            Toast.makeText(getApplicationContext(),"No Internet connection !!!,Please open internet access.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "No Internet connection !!!,Please open internet access.", Toast.LENGTH_LONG).show();
             startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
         }
     }
-
-
 
     // Add Fragments to Tabs
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new UpcomingFragment(), "Upcoming");
         adapter.addFragment(new NowplayingFragment(), "Now Playing");
-        adapter.addFragment(new PopularFragment(),"Popular");
+        adapter.addFragment(new PopularFragment(), "Popular");
 //        adapter.addFragment(new );
         viewPager.setAdapter(adapter);
     }
 
-    public SearchView searchView;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -77,8 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    public void searchmovie()
-    {
+    public void searchmovie() {
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -88,8 +81,8 @@ public class HomeActivity extends AppCompatActivity {
                 //doFilterAsync(mSearchString);
 //                Toast.makeText(getApplicationContext(),search_str, Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(getApplicationContext(),SearchresultActivity.class);
-                intent.putExtra("search_name",search_str);
+                Intent intent = new Intent(getApplicationContext(), SearchresultActivity.class);
+                intent.putExtra("search_name", search_str);
                 startActivity(intent);
                 return true;
             }
@@ -110,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
             searchmovie();
 
-        }else if(id==R.id.about){
+        } else if (id == R.id.about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }

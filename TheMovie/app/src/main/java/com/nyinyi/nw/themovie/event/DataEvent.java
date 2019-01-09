@@ -1,6 +1,5 @@
 package com.nyinyi.nw.themovie.event;
 
-import com.nyinyi.nw.themovie.model.upcoming.Upcoming;
 import com.nyinyi.nw.themovie.vos.MovieVO;
 import com.nyinyi.nw.themovie.vos.NowplayingVO;
 import com.nyinyi.nw.themovie.vos.PopularVO;
@@ -40,7 +39,7 @@ public class DataEvent {
         }
     }
 
-    public static class PopularMovieDataLoadedEvent{
+    public static class PopularMovieDataLoadedEvent {
         private List<PopularVO> popularVOList;
 
         public PopularMovieDataLoadedEvent(List<PopularVO> popularVOList) {
@@ -52,7 +51,7 @@ public class DataEvent {
         }
     }
 
-    public static class SearchMovieLoadEvent{
+    public static class SearchMovieLoadEvent {
         private List<UpcomingVO> searchVOList;
 
         public SearchMovieLoadEvent(List<UpcomingVO> searchVOList) {
@@ -64,7 +63,7 @@ public class DataEvent {
         }
     }
 
-    public static class MovieDetail{
+    public static class MovieDetail {
         private MovieVO moviedetailList;
 
         public MovieDetail(MovieVO moviedetailList) {
