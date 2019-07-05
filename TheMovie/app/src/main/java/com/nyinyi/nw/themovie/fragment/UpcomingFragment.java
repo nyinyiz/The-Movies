@@ -49,7 +49,7 @@ public class UpcomingFragment extends Fragment implements SwipeRefreshLayout.OnR
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_upcoming, container, false);
         ButterKnife.bind(this, rootView);
-        swipeRefreshLayout.setVisibility(rootView.VISIBLE);
+
         RetrofitDataAgentImpl.getInstance().loadUpcomingMovies();
         setupRecycler();
         return recyclerView;
